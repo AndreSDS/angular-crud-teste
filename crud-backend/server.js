@@ -3,7 +3,7 @@ const bodyParser = require ("body-parser");
 const express = require ('express');
 const mongoose = require ("mongoose");
 
-const Issue = require ('./models/Issue.js');
+import Issues from './models/Issue.js';
 
 const app = express();
 const router = express.Router();
@@ -11,7 +11,8 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://rammpk:caver45..@ds145895.mlab.com:45895/crud-angular');
+//mongoose.connect('mongodb://rammpk:caver45..@ds145895.mlab.com:45895/crud-angular');
+mongoose.connect('mongodb://localhost:27017/issues',{ useNewUrlParser: true });
 
 const connection = mongoose.connection;
 connection.once('open', ()=>{
@@ -19,11 +20,11 @@ connection.once('open', ()=>{
 });
 
 router.route('/issues').get((req, res) => {
-    Issue.find((err, issues)=>{
+    Issues.find((err, issue)=>{
         if(err)
             console.log(err);
         else
-            res.json(issues);
+            res.json(issue);
     });
 });
 
@@ -37,7 +38,7 @@ router.route('/issues/:id').get((req, res)=>{
 });
 
 router.route('/issues/add').post((req, res) => {
-    let issue = new Issue(req.body);
+    let issue = new Issues(req.body);
     issue.save()
         .then(issue => {
             res.status(200).json({'issue':'Adicionado com sucesso!'});
@@ -47,8 +48,8 @@ router.route('/issues/add').post((req, res) => {
         });
 });
 
-router.route('/issues/update/:id').post((req, res)=>{
-    Issue.findById(req.params.id, (err, issue)=>{
+router.route('/issues/update/:id').put((req, res)=>{
+    Issues.findById(req.params.id, (err, issue)=>{
         if(!issue)
             return next(new Error('Não foi possível carregar documento'));
         else
@@ -66,8 +67,8 @@ router.route('/issues/update/:id').post((req, res)=>{
     });
 });
 
-router.route('/issues/delete/:id').get((req, res)=>{
-    Issue.findByIdAndRemove({_id: req.params.id}, (err)=>{
+router.route('/issues/delete/:id').delete((req, res)=>{
+    Issues.findByIdAndRemove({_id: req.params.id}, (err)=>{
         if(err)
             res.json(err);
         else
@@ -76,6 +77,6 @@ router.route('/issues/delete/:id').get((req, res)=>{
 });
 
 app.use('/', router);
-
+    
 app.get('/', (req, res)=>res.send("Hello World!"));
 app.listen(4000, ()=> console.log('Server rodando'));
