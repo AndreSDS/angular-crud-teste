@@ -1,3 +1,6 @@
+import { IssueService } from './../../issue.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateComponent implements OnInit {
 
-  constructor() { }
+  createForm: FormGroup;
+
+  constructor(private issueService: IssueService, private fb: FormBuilder, private router: Router) {
+    this.createForm = this.fb.group({
+      title: ['', Validators.required],
+      responsible: '',
+      description: '',
+      severity: '',
+      status: ''
+    });
+  }
 
   ngOnInit() {
   }

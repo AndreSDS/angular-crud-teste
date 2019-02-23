@@ -56,7 +56,7 @@ router.route('/issues/update/:id').put((req, res)=>{
             issue.title = req.body.title;
             issue.responsible = req.body.responsible;
             issue.description = req.body.description;
-            issue.severety = req.body.severety;
+            issue.severity = req.body.severity;
             issue.status = req.body.status;
 
             issue.save().then(issue => {
