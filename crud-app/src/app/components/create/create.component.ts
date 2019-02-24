@@ -17,12 +17,17 @@ export class CreateComponent implements OnInit {
       title: ['', Validators.required],
       responsible: '',
       description: '',
-      severity: '',
-      status: ''
+      severity: ''
     });
   }
 
-  ngOnInit() {
+  addIssue(title, responsible, description, severity) {
+    this.issueService.addIssue(title, responsible, description, severity).
+    subscribe(() => {
+      this.router.navigate(['/list']);
+    });
   }
+
+  ngOnInit() {}
 
 }

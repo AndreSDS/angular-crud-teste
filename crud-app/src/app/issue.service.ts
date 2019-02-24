@@ -22,8 +22,8 @@ export class IssueService {
     const issue = {
       title,
       responsible,
-      description,
-      severity
+      severity,
+      description
     };
     return this.http.post(`${this.url}/issues/add`, issue);
   }
@@ -39,7 +39,7 @@ export class IssueService {
     return this.http.put(`${this.url}/issues/update/${id}`, issue);
   }
 
-  deleteIssue(id){
+  deleteIssue(id) {
     return this.http.delete(`${this.url}/issues/delete/${id}`);
   }
 }

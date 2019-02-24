@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListComponent } from './components/list/list.component';
 import { CreateComponent } from './components/create/create.component';
 import { EditComponent } from './components/edit/edit.component';
-
 import {
   MatToolbarModule,
   MatFormFieldModule,
@@ -24,13 +23,14 @@ import {
   MatSnackBarModule } from '@angular/material';
 
 import { IssueService } from './issue.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: 'create', component: CreateComponent},
   { path: 'edit/:id', component: EditComponent },
   { path: 'list', component: ListComponent },
   { path: '', redirectTo: 'list', pathMatch: 'full' }
-]
+];
 
 @NgModule({
   declarations: [
@@ -45,6 +45,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
+    ReactiveFormsModule,
     MatToolbarModule,
     MatToolbarModule,
     MatFormFieldModule,
